@@ -1,4 +1,6 @@
 import {city} from '../models/index.js';
+import { db } from '../config/dbConfig.js';
+import { eq } from "drizzle-orm";
 
 class CityRepository {
 
@@ -23,7 +25,7 @@ class CityRepository {
 
     async deleteCity(cityId) {
         try {
-            await db.delete(City).where(eq(City.id,cityId))
+            await db.delete(city).where(eq(city.id,cityId))
             return true;
         } catch (error) {
             console.log("Something went wrong in the repository layer");
@@ -34,13 +36,13 @@ class CityRepository {
     async updateCity(cityId, data) { // {name: "Prayagraj"}
         try {
     
-            const updatedCity = await db
-            .update(City)
+            let updatedCity = await db
+            .update(city)
             .set({ name: data.name })
-            .where(eq(City.id, cityId))
+            .where(eq(city.id, cityId))
             ;
-        
-        return updatedCity[0];
+            let updatedData= await db.select().from(city).where(eq(city.id,cityId));
+        return updatedData;
         } catch (error) {
             console.log("Something went wrong in the repository layer");
             throw {error};
@@ -49,8 +51,8 @@ class CityRepository {
 
     async getCity(cityId) {
         try {
-            const city = await City.findByPk(cityId);
-            return city;
+            const foundCity = await db.select().from(city).where(eq(city.id,cityId));
+            return foundCity;
         } catch (error) {
             console.log("Something went wrong in the repository layer");
             throw {error};
@@ -59,18 +61,9 @@ class CityRepository {
 
     async getAllCities(filter) { // filter can be empty also
         try {
-            if(filter.name) {
-                const cities = await City.findAll({
-                    where: {
-                        name: {
-                            [Op.startsWith]: filter.name
-                        }
-                    }
-                });
+                const cities = await db.select().from(city);
                 return cities;
-            }
-            const cities = await City.findAll();
-            return cities;
+            
         } catch (error) {
             console.log("Something went wrong in the repository layer");
             throw {error};

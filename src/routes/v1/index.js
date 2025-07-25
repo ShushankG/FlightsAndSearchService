@@ -4,11 +4,15 @@ import * as CityController  from '../../controllers/city-controller.js'
 import * as FlightController  from "../../controllers/flight-controller.js"
 import * as AirportController  from "../../controllers/airport-controller.js"
 const router = express.Router();
-
+// ✅ working
 router.post('/city', CityController.create);
+// ✅ working
 router.delete('/city/:id', CityController.destroy);
+// ✅ working
 router.get('/city/:id', CityController.get);
+// ✅ working
 router.get('/city', CityController.getAll);
+// ✅ working
 router.patch('/city/:id', CityController.update);
 
 router.post(
@@ -17,6 +21,7 @@ router.post(
     FlightController.create
 );
 router.get('/flights', FlightController.getAll);
+// ✅ 
 router.get('/flights/:id', FlightController.get);
 router.patch('/flights/:id', FlightController.update);
 

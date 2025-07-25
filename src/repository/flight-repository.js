@@ -1,4 +1,6 @@
-import {flight as Flights} from '../models/index.js';
+import { flight as Flights} from '../models/index.js';
+import { db } from '../config/dbConfig.js';
+import { eq } from 'drizzle-orm';
 
 class FlightRepository {
 
@@ -15,7 +17,7 @@ class FlightRepository {
 
     async getFlight(flightId) {
         try {
-            const flight = await Flights.findByPk(flightId);
+            const flight = await db.select().from(Flights).where(eq(Flights.id,flightId));
             return flight;
         } catch (error) {
             console.log("Something went wrong in the repository layer");
