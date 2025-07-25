@@ -1,10 +1,8 @@
-const express = require('express');
-
-const { FlightMiddlewares } = require('../../middlewares/index');
-
-const CityController = require('../../controllers/city-controller');
-const FlightController = require('../../controllers/flight-controller');
-const AirportController = require('../../controllers/airport-controller');
+import express from 'express';
+import * as FlightMiddlewares  from '../../middlewares/index.js';
+import * as CityController  from '../../controllers/city-controller.js'
+import * as FlightController  from "../../controllers/flight-controller.js"
+import * as AirportController  from "../../controllers/airport-controller.js"
 const router = express.Router();
 
 router.post('/city', CityController.create);
@@ -24,4 +22,4 @@ router.patch('/flights/:id', FlightController.update);
 
 router.post('/airports', AirportController.create);
 
-module.exports = router;
+export{router as v1ApiRoutes}

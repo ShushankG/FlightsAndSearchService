@@ -14,7 +14,7 @@ const SuccessCodes = Object.freeze({
     CREATED: 201
 });
 
-module.exports = {
+export{
     ClientErrorCodes,
     ServerErrorCodes,
     SuccessCodes

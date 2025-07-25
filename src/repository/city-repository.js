@@ -1,15 +1,20 @@
-const { Op } = require('sequelize');
-
-const { City } = require('../models/index');
+import {city} from '../models/index.js';
 
 class CityRepository {
 
     async createCity({ name }) { 
         try {
-            const city = await City.create({
-                name
+            const newCity = await db.insert(city).values({
+                name,
+                createdAt: new Date(),
+                updatedAt: new Date(),
             });
-            return city;
+            let insertedCity = await db
+            .select()
+            .from(city)
+            .where(eq(city.id, newCity[0].insertId));
+      
+          return insertedCity;
         } catch (error) {
             console.log("Something went wrong in the repository layer");
             throw {error};
@@ -18,11 +23,7 @@ class CityRepository {
 
     async deleteCity(cityId) {
         try {
-            await City.destroy({
-                where: {
-                    id: cityId
-                }
-            });
+            await db.delete(City).where(eq(City.id,cityId))
             return true;
         } catch (error) {
             console.log("Something went wrong in the repository layer");
@@ -32,19 +33,14 @@ class CityRepository {
 
     async updateCity(cityId, data) { // {name: "Prayagraj"}
         try {
-            // The below approach also works but will not return updated object
-            // if we are using Pg then returning: true can be used, else not
-            // const city = await City.update(data, {
-            //     where: {
-            //         id: cityId
-            //     },
-            //      
-            // });
-            // for getting updated data in mysql we use the below approach
-            const city = await City.findByPk(cityId);
-            city.name = data.name;
-            await city.save();
-            return city;
+    
+            const updatedCity = await db
+            .update(City)
+            .set({ name: data.name })
+            .where(eq(City.id, cityId))
+            ;
+        
+        return updatedCity[0];
         } catch (error) {
             console.log("Something went wrong in the repository layer");
             throw {error};
@@ -83,4 +79,4 @@ class CityRepository {
 
 }
 
-module.exports = CityRepository;
+export{CityRepository};

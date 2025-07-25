@@ -1,11 +1,11 @@
-const CrudService = require('./crud-service');
-const { AirportRespository } = require('../repository/index');
+import {CrudService} from "./crud-service.js";
+import {AirportRepository} from  "../repository/index.js";
 
 class AirportService extends CrudService {
     constructor() {
-        const airportRespository = new AirportRespository();
-        super(airportRespository);
+        const airportRepository = new AirportRepository();
+        super(airportRepository);
     }
 }
 
-module.exports = AirportService;
+export{AirportService};

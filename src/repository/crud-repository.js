@@ -1,4 +1,4 @@
-class CrudRespository {
+class CrudRepository {
     constructor(model) {
         this.model = model;
     }
@@ -8,7 +8,7 @@ class CrudRespository {
             const result = await this.model.create(data);
             return result;
         } catch (error) {
-            console.log("Something went wrong in crus repo");
+            console.log("Something went wrong in crud repo");
             throw error;
         }
     }
@@ -22,7 +22,7 @@ class CrudRespository {
             });
             return true;
         } catch (error) {
-            console.log("Something went wrong in crus repo");
+            console.log("Something went wrong in crud repo");
             throw error;
         }
     }
@@ -32,7 +32,7 @@ class CrudRespository {
             const result = await this.model.findByPk(modelId);
             return result;
         } catch (error) {
-            console.log("Something went wrong in crus repo");
+            console.log("Something went wrong in crud repo");
             throw error;
         }
     }
@@ -42,7 +42,7 @@ class CrudRespository {
             const result = await this.model.findAll();
             return result;
         } catch (error) {
-            console.log("Something went wrong in crus repo");
+            console.log("Something went wrong in crud repo");
             throw error;
         }
     }
@@ -57,10 +57,12 @@ class CrudRespository {
             });
             return result;
         } catch (error) {
-            console.log("Something went wrong in crus repo");
+            console.log("Something went wrong in crud repo");
             throw error;
         }
     }
 }
 
-module.exports = CrudRespository;
+export{
+    CrudRepository
+}

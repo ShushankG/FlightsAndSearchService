@@ -1,5 +1,5 @@
-const {FlightService} = require('../services/index');
-const { SuccessCodes } = require('../utils/error-codes');
+import {FlightService} from '../services/index.js';
+import { SuccessCodes } from '../utils/error-codes.js';
 
 const flightService = new FlightService();
 
@@ -93,7 +93,7 @@ const update = async (req, res) => {
     }
 }
 
-module.exports = {
+export {
     create,
     getAll,
     get,

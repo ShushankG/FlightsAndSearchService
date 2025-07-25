@@ -1,35 +1,8 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Airport extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-      this.belongsTo(models.City, {
-        foreignKey: 'cityId',
-        onDelete: 'CASCADE'
-      });
-    }
-  }
-  Airport.init({
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    address: DataTypes.STRING,
-    cityId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
-  }, {
-    sequelize,
-    modelName: 'Airport',
-  });
-  return Airport;
-};
+import { mysqlTable, varchar, serial, bigint } from "drizzle-orm/mysql-core";
+import { city } from "./city.js";
+export const airport = mysqlTable("airport", {
+  id: serial("id", { unsigned: true }).primaryKey(),
+  name: varchar("name",{ length: 255 }).notNull(),
+  address: varchar("address",{ length: 255 }),
+  cityId: bigint("city_id",{unsigned:true}).notNull().references(()=> city.id,{onDelete:'cascade'})
+});

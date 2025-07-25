@@ -54,4 +54,4 @@ class CrudService {
     }
 }
 
-module.exports = CrudService;
+export{CrudService};

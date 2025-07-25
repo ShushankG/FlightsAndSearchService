@@ -1,56 +1,16 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Flights extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  }
-  Flights.init({
-    flightNumber: {
-      type:DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    airplaneId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    departureAirportId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    arrivalAirportId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    arrivalTime: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    departureTime: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    price: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    boardingGate: DataTypes.STRING,
-    totalSeats: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
-  }, {
-    sequelize,
-    modelName: 'Flights',
-  });
-  return Flights;
-};
+import { mysqlTable, serial, int, varchar, timestamp } from "drizzle-orm/mysql-core";
+
+export const flight = mysqlTable("flight", {
+  id: serial("id", { unsigned: true }).primaryKey(),
+  flightNumber: varchar("flight_number", { length: 255 }).notNull().unique(),
+  airplaneId: int("airplane_id").notNull(),
+  departureAirportId: int("departure_airport_id").notNull(),
+  arrivalAirportId: int("arrival_airport_id").notNull(),
+  arrivalTime: timestamp("arrival_time").notNull(),
+  departureTime: timestamp("departure_time").notNull(),
+  price: int("price").notNull(),
+  boardingGate: varchar("boarding_gate", { length: 255 }),
+  totalSeats: int("total_seats").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});

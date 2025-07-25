@@ -1,4 +1,4 @@
-const { CityService } = require('../services/index');
+import { CityService } from "../services/index.js";
 
 const cityService = new CityService();
 
@@ -104,7 +104,7 @@ const getAll = async (req, res) => {
     }
 }
 
-module.exports = {
+export {
     create,
     destroy,
     get,

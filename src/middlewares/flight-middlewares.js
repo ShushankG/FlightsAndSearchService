@@ -1,4 +1,4 @@
-const { ClientErrorCodes } = require('../utils/error-codes');
+import { ClientErrorCodes } from "../utils/error-codes.js";
 const validateCreateFlight = (req, res, next) => {
     if(
         !req.body.flightNumber ||
@@ -21,6 +21,6 @@ const validateCreateFlight = (req, res, next) => {
     next();
 }
 
-module.exports = {
-    validateCreateFlight
+export {
+    validateCreateFlight 
 }

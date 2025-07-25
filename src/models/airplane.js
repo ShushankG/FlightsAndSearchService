@@ -1,31 +1,15 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Airplane extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  }
-  Airplane.init({
-    modelNumber: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    capacity: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 200
-    },
-  }, {
-    sequelize,
-    modelName: 'Airplane',
-  });
-  return Airplane;
-};
+import {
+  mysqlTable,
+  varchar,
+  serial,
+  int,
+  timestamp,
+} from "drizzle-orm/mysql-core";
+
+export const airplane = mysqlTable("airplane", {
+  id: serial("id", { unsigned: true }).primaryKey(),
+  modelNumeber: varchar("model_number",{ length: 255 }).notNull(),
+  capacity: int("capacity", { unsigned: true }).notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});

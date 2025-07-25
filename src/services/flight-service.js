@@ -1,11 +1,11 @@
-const {FlightRespository, AirplaneRespository} = require('../repository/index');
-const { compareTime } = require('../utils/helper');
+import {FlightRepository, AirplaneRepository} from '../repository/index.js';
+import { compareTime } from  '../utils/helper.js';
 
 class FlightService {
 
     constructor() {
-        this.airplaneRespository = new AirplaneRespository();
-        this.flightrespository = new FlightRespository();
+        this.AirplaneRepository = new AirplaneRepository();
+        this.FlightRepository = new FlightRepository();
     }
 
     async createFlight(data) {
@@ -13,8 +13,8 @@ class FlightService {
             if(!compareTime(data.arrivalTime, data.departureTime)) {
                 throw {error: 'Arrival time cannot be less than departure time'};
             }
-            const airplane = await this.airplaneRespository.getAirplane(data.airplaneId);
-            const flight = await this.flightrespository.createFlight({
+            const airplane = await this.AirplaneRepository.getAirplane(data.airplaneId);
+            const flight = await this.FlightRepository.createFlight({
                 ...data, totalSeats:airplane.capacity 
             });
             return flight;
@@ -26,7 +26,7 @@ class FlightService {
 
     async getAllFlightData(data) {
         try {
-            const flights = await this.flightrespository.getAllFlights(data);
+            const flights = await this.FlightRepository.getAllFlights(data);
             return flights;
         } catch (error) {
             console.log("Something went wrong at service layer");
@@ -36,7 +36,7 @@ class FlightService {
 
     async getFlight(flightId) {
         try {
-            const flight = await this.flightrespository.getFlight(flightId);
+            const flight = await this.FlightRepository.getFlight(flightId);
             return flight;
         } catch (error) {
             console.log("Something went wrong at service layer");
@@ -46,7 +46,7 @@ class FlightService {
 
     async updateFlight(flightId, data) {
         try {
-            const response = await this.flightrespository.updateFlights(flightId, data);
+            const response = await this.FlightRepository.updateFlights(flightId, data);
             return response;
         } catch (error) {
             console.log("Something went wrong at service layer");
@@ -56,8 +56,7 @@ class FlightService {
     
 }
 
-module.exports = FlightService;
-
+export{FlightService}
 /**
  * {
  *   flightNumber,
